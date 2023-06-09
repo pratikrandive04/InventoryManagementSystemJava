@@ -1,7 +1,7 @@
 package practiceProblems;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 abstract class Product {
     private String name;
@@ -76,27 +76,28 @@ class Grocery extends Product {
 }
 
 class Inventory {
-    private Map<String, Product> products;
+    private List<Product> products;
 
     public Inventory() {
-        products = new HashMap<>();
+        products = new ArrayList<>();
     }
 
     public void addProduct(Product product) {
-        products.put(product.getName(), product);
+        products.add(product);
     }
 
     public void updateQuantity(String name, int quantity) {
-        Product product = products.get(name);
-        if (product != null) {
-            product.setQuantity(quantity);
-        } else {
-            System.out.println("Product not found.");
+        for (Product product : products) {
+            if (product.getName().equals(name)) {
+                product.setQuantity(quantity);
+                return;
+            }
         }
+        System.out.println("Product not found.");
     }
 
     public void displayProducts() {
-        for (Product product : products.values()) {
+        for (Product product : products) {
             product.displayDetails();
         }
     }
